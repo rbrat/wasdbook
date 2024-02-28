@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+
+  backend:
+    build: ./services/backend
+    ports:
+      - 8000:8000
+    volumes:
+      - ./services/backend:/app
+    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+    depends_on:
+      - db
+
+  frontend:
+    build: ./services/frontend
+    volumes:
+      - './services/frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - 8080:8080
+
+  db:
+    image: postgres:15.1
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=wasdbook
+      - POSTGRES_PASSWORD=/run/secrets/db_password
+      - POSTGRES_DB=wasdbook
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+secrets:
+   db_password:
+     file: db_password.txt
+
+volumes:
+  postgres_data:
