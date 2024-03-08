@@ -11,6 +11,8 @@ services:
     command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
     depends_on:
       - db
+    networks:
+      - custom
 
   frontend:
     build: ./services/frontend
@@ -18,18 +20,22 @@ services:
       - './services/frontend:/app'
       - '/app/node_modules'
     ports:
-      - 8080:8080
+      - 3000:3000
 
   db:
-    image: postgres:15.1
+    image: postgres:16.1
+    hostname: db
     expose:
       - 5432
     environment:
       - POSTGRES_USER=wasdbook
       - POSTGRES_PASSWORD=/run/secrets/db_password
       - POSTGRES_DB=wasdbook
+      - POSTGRES_HOST=db
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - custom
 
 secrets:
    db_password:
@@ -37,3 +43,7 @@ secrets:
 
 volumes:
   postgres_data:
+
+networks:
+  custom:
+    driver: bridge
