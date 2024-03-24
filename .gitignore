@@ -1,2 +1,4 @@
 db_password.txt
 services/backend/.env
+.env
+__pycache__

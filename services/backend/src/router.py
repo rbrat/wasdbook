@@ -6,11 +6,12 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 
-from . import schemas, crud
-from .auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_active_user
-from .database import get_db
-from .dependencies import NavParams
-from .exceptions import IncorrectCredentialsHTTPException
+import schemas
+import crud
+from auth import ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user, create_access_token, get_current_active_user
+from database import get_db
+from dependencies import NavParams
+from exceptions import IncorrectCredentialsHTTPException
 router = APIRouter()
 
 @router.get('/')

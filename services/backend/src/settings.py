@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from .exceptions import EnvironmentError
+from exceptions import EnvironmentError
 load_dotenv()
 
 SALT = os.getenv('SALT')

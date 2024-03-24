@@ -1,11 +1,12 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.orm import Session
-from . import models, schemas
-from .crypt import get_password_hash
-from .dependencies import NavParams
-from .exceptions import NoteNotFoundHTTPException, ForbiddenHTTPException, UserNotFoundHTTPException, UserExistsHTTPException, UserForbiddenHTTPException
-from .settings import SALT
+import models
+import schemas
+from crypt import get_password_hash
+from dependencies import NavParams
+from exceptions import NoteNotFoundHTTPException, ForbiddenHTTPException, UserNotFoundHTTPException, UserExistsHTTPException, UserForbiddenHTTPException
+from settings import SALT
 
 
 

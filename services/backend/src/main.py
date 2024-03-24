@@ -1,9 +1,9 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine
-from .router import router
-from . import models
+from database import engine
+from router import router
+import models
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -15,7 +15,7 @@ models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
 origins = [
     'http://localhost:3000',
-    'http://127.0.0.1:3000'
+    'http://127.0.0.1:3000',
 ]
 
 

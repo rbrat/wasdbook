@@ -6,12 +6,12 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from pydantic import ValidationError
 
-from . import schemas
-from .crud import get_user_for_auth, get_user
-from .crypt import verify_password
-from .database import get_db
-from .exceptions import InactiveUserHTTPException, IncorrectCredentialsHTTPException
-from .settings import SALT, SECRET_KEY
+import schemas
+from crud import get_user_for_auth, get_user
+from crypt import verify_password
+from database import get_db
+from exceptions import InactiveUserHTTPException, IncorrectCredentialsHTTPException
+from settings import SALT, SECRET_KEY
 
 ALGORITHM = 'HS256'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30

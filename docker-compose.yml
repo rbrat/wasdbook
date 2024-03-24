@@ -8,11 +8,18 @@ services:
       - 8000:8000
     volumes:
       - ./services/backend:/app
-    command: uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
+    command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
+    working_dir: '/app/src'
     depends_on:
       - db
-    networks:
-      - custom
+  
+  migration:
+    build: ./services/backend
+    volumes:
+      - ./services/backend:/app
+    command: /bin/bash -c "/app/alembic-entrypoint.sh"
+    depends_on:
+      - db
 
   frontend:
     build: ./services/frontend
@@ -26,16 +33,13 @@ services:
     image: postgres:16.1
     hostname: db
     expose:
-      - 5432
-    environment:
-      - POSTGRES_USER=wasdbook
-      - POSTGRES_PASSWORD=/run/secrets/db_password
-      - POSTGRES_DB=wasdbook
-      - POSTGRES_HOST=db
+      - 6432
+    ports:
+      - 6432:5432
+    env_file:
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    networks:
-      - custom
 
 secrets:
    db_password:
@@ -43,7 +47,3 @@ secrets:
 
 volumes:
   postgres_data:
-
-networks:
-  custom:
-    driver: bridge
